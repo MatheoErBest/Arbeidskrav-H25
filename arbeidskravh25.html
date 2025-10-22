@@ -142,130 +142,68 @@
         const dragonHealthBar = document.getElementById("dragon-health");
 
         //Her kommer din kode! :o
-
-        // Oppdaterer navnene på heltene og drage
+        //Setter navn på heltene og dragen
         healerName.innerHTML = heroesArray[0].name;
         archerName.innerHTML = heroesArray[1].name;
         warriorName.innerHTML = heroesArray[2].name;
         dragonName.innerHTML = dragonStats.name;
 
-        // Funksjon for å oppdatere heltenes HP-tekst og healthbar
-        function updateHeroStatus(hero, healthTxtElement, healthBarElement) {
-            healthTxtElement.innerHTML = `${hero.currentHP} / ${hero.maxHP} HP`;
-            const healthPercentage = (hero.currentHP / hero.maxHP) * 100;
-            healthBarElement.style.width = `${healthPercentage}%`;
-        }
-
-        // Funksjon for å oppdatere dragens HP-tekst og healthbar
-        function updateDragonStatus() {
-            dragonHealthTxt.innerHTML = `${dragonStats.currentHP} / ${dragonStats.maxHP} HP`;
-            const healthPercentage = (dragonStats.currentHP / dragonStats.maxHP) * 100;
-            dragonHealthBar.style.width = `${healthPercentage}%`;
-        }
-
-        // Initial oppdatering av heltenes og dragens status
-        updateHeroStatus(heroesArray[0], healerHealthTxt, healerHealthBar);
-        updateHeroStatus(heroesArray[1], archerHealthTxt, archerHealthBar);
-        updateHeroStatus(heroesArray[2], warriorHealthTxt, warriorHealthBar);
-        updateDragonStatus();
-
-        // Legger til event listeners for heltene
-        healer.addEventListener("click", function () {
+        healer.addEventListener("click", function() {
             if (heroesArray[0].alive && dragonStats.alive) {
+                // Healer angriper + alert
+                alert("healer angrep for " + heroesArray[0].damage + " skade!");
                 dragonStats.currentHP -= heroesArray[0].damage;
+
+                //Sjekker om dragen dævva
                 if (dragonStats.currentHP <= 0) {
                     dragonStats.currentHP = 0;
                     dragonStats.alive = false;
+                    alert("Dragen dævva")
                 }
-                updateDragonStatus();
-            }
+                
+                dragonHealthTxt.innerHTML = `${dragonStats.currentHP} / ${dragonStats.maxHP} HP`;
+                
+            };
         });
 
-        archer.addEventListener("click", function () {
+        archer.addEventListener("click", function() {
             if (heroesArray[1].alive && dragonStats.alive) {
+                // Healer angriper + alert
+                alert("Archer angrep for " + heroesArray[1].damage + " skade!");
                 dragonStats.currentHP -= heroesArray[1].damage;
+
+                //Sjekker om dragen dævva
                 if (dragonStats.currentHP <= 0) {
                     dragonStats.currentHP = 0;
                     dragonStats.alive = false;
+                    alert("Dragen dævva")
                 }
-                updateDragonStatus();
-            }
-        });
-        // Når heltene angriper dragen, slår dragen tilbake hvis den fortsatt lever.
-        // Hjelpefunksjon: finn levende helter
-        function getAliveHeroes() {
-            return heroesArray.filter(function (h) {
-                return h.alive && h.currentHP > 0;
-            });
-        }
-
-        // Funksjon for at dragen angriper en tilfeldig levende helt
-        function dragonAttack() {
-            if (!dragonStats.alive) return;
-            const alive = getAliveHeroes();
-            if (alive.length === 0) return; // ingen helter å angripe
-
-            // Velg tilfeldig mål
-            const target = alive[Math.floor(Math.random() * alive.length)];
-
-            // Påfør skade
-            target.currentHP -= dragonStats.damage;
-            if (target.currentHP <= 0) {
-                target.currentHP = 0;
-                target.alive = false;
-            }
-
-            // Oppdater riktig UI for den målte helten
-            if (target.id === 0) updateHeroStatus(heroesArray[0], healerHealthTxt, healerHealthBar);
-            if (target.id === 1) updateHeroStatus(heroesArray[1], archerHealthTxt, archerHealthBar);
-            if (target.id === 2) updateHeroStatus(heroesArray[2], warriorHealthTxt, warriorHealthBar);
-        }
-
-        // Kall dragen tilbake etter hvert hero-angrep (legger inn liten delay for å vise sekvens)
-        function retaliateIfAlive() {
-            if (dragonStats.alive) {
-                setTimeout(dragonAttack, 600);
-            }
-        }
-
-        // Oppdater hero click-handlere til å la dragen slå tilbake når den fortsatt er i live.
-        // (Legger til kall til `retaliateIfAlive` etter hver oppdatering av dragen.)
-        healer.addEventListener("click", function () {
-            if (heroesArray[0].alive && dragonStats.alive) {
-                dragonStats.currentHP -= heroesArray[0].damage;
-                if (dragonStats.currentHP <= 0) {
-                    dragonStats.currentHP = 0;
-                    dragonStats.alive = false;
-                }
-                updateDragonStatus();
-                retaliateIfAlive();
-            }
+                
+                dragonHealthTxt.innerHTML = `${dragonStats.currentHP} / ${dragonStats.maxHP} HP`;
+                
+            };
         });
 
-        archer.addEventListener("click", function () {
-            if (heroesArray[1].alive && dragonStats.alive) {
-                dragonStats.currentHP -= heroesArray[1].damage;
-                if (dragonStats.currentHP <= 0) {
-                    dragonStats.currentHP = 0;
-                    dragonStats.alive = false;
-                }
-                updateDragonStatus();
-                retaliateIfAlive();
-            }
-        });
-
-        warrior.addEventListener("click", function () {
+        warrior.addEventListener("click", function() {
             if (heroesArray[2].alive && dragonStats.alive) {
+                // Healer angriper + alert
+                alert("Warrior angrep for " + heroesArray[2].damage + " skade!");
                 dragonStats.currentHP -= heroesArray[2].damage;
+
+                //Sjekker om dragen dævva
                 if (dragonStats.currentHP <= 0) {
                     dragonStats.currentHP = 0;
                     dragonStats.alive = false;
+                    alert("Dragen dævva")
                 }
-                updateDragonStatus();
-                retaliateIfAlive();
-            }
+                
+                dragonHealthTxt.innerHTML = `${dragonStats.currentHP} / ${dragonStats.maxHP} HP`;
+                
+            };
         });
         
+
+
     </script>
 </body>
 
