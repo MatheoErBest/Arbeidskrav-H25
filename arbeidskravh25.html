@@ -148,6 +148,20 @@
         warriorName.innerHTML = heroesArray[2].name;
         dragonName.innerHTML = dragonStats.name;
 
+        //Legger til motangrep fra dragen
+        function dragonAttack() {
+            if (dragonStats.alive) {
+                let aliveHeroes = heroesArray.filter(hero => hero.alive);
+                heroAttack = Math.floor(Math.random()*aliveHeroes.length);
+                heroesArray[heroAttack].currentHP -= dragonStats.damage;
+
+                alert("Dragen angriper " + heroesArray[heroAttack].name + " for " + dragonStats.damage + " skade!");
+                heroesArray[heroAttack].innerHTML = `${heroesArray[heroAttack].currentHP} / ${heroesArray[heroAttack].maxHP} HP`;
+
+            }
+        };
+
+        //Legger til angrep for heltene
         healer.addEventListener("click", function() {
             if (heroesArray[0].alive && dragonStats.alive) {
                 // Healer angriper + alert
@@ -162,6 +176,8 @@
                 }
                 
                 dragonHealthTxt.innerHTML = `${dragonStats.currentHP} / ${dragonStats.maxHP} HP`;
+
+                dragonAttack();
                 
             };
         });
@@ -201,6 +217,10 @@
                 
             };
         });
+
+        
+        
+        
         
 
 
