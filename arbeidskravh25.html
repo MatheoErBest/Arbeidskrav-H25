@@ -88,7 +88,7 @@
             },
             {
                 id: 1,
-                name: "Ariana archer",
+                name: "Ariana Archer",
                 maxHP: 600, //Denne er oppdatert og satt inn 09.10.2025
                 currentHP: 600,
                 damage: 400,
@@ -108,7 +108,7 @@
             name: "Daar Dragon",
             maxHP: 2000,
             currentHP: 2000,
-            damage: 200,
+            damage: 800,
             alive: true,
         };
 
@@ -152,14 +152,50 @@
         function dragonAttack() {
             if (dragonStats.alive) {
                 let aliveHeroes = heroesArray.filter(hero => hero.alive);
-                heroAttack = Math.floor(Math.random()*aliveHeroes.length);
-                heroesArray[heroAttack].currentHP -= dragonStats.damage;
+                let heroAttack = Math.floor(Math.random() * aliveHeroes.length);
+                aliveHeroes[heroAttack].currentHP -= dragonStats.damage;
 
-                alert("Dragen angriper " + heroesArray[heroAttack].name + " for " + dragonStats.damage + " skade!");
-                heroesArray[heroAttack].innerHTML = `${heroesArray[heroAttack].currentHP} / ${heroesArray[heroAttack].maxHP} HP`;
+                alert(`Dragen angriper ${aliveHeroes[heroAttack].name} for ${dragonStats.damage} skade!`);
 
+                // Oppdater HP-tekst, healthbar og sjekker om helten døde
+                if (aliveHeroes[heroAttack].name === "Henriette Healer") {
+                    healerHealthTxt.innerHTML = `${aliveHeroes[heroAttack].currentHP} / ${aliveHeroes[heroAttack].maxHP} HP`;
+                    healerHealthBar.style.width = `${(aliveHeroes[heroAttack].currentHP / aliveHeroes[heroAttack].maxHP) * 300}px`;
+                    if (heroesArray[0].currentHP <= 0) {
+                        heroesArray[0].currentHP = 0;
+                        heroesArray[0].alive = false;
+                        alert(`${heroesArray[0].name} døde!`);
+                        healerHealthTxt.innerHTML = `0 / ${heroesArray[0].maxHP} HP`;
+                        healerHealthBar.style.width = `0px`;
+                    }
+                } 
+                else if (aliveHeroes[heroAttack].name === "Ariana Archer") {
+                    archerHealthTxt.innerHTML = `${aliveHeroes[heroAttack].currentHP} / ${aliveHeroes[heroAttack].maxHP} HP`;
+                    archerHealthBar.style.width = `${(aliveHeroes[heroAttack].currentHP / aliveHeroes[heroAttack].maxHP) * 300}px`;
+                    if (heroesArray[1].currentHP <= 0) {
+                        heroesArray[1].currentHP = 0;
+                        heroesArray[1].alive = false;
+                        alert(`${heroesArray[1].name} døde!`);
+                        archerHealthTxt.innerHTML = `0 / ${heroesArray[1].maxHP} HP`;
+                        archerHealthBar.style.width = `0px`;
+                    }
+                } 
+                else if (aliveHeroes[heroAttack].name === "Wyona Warrior") {
+                    warriorHealthTxt.innerHTML = `${aliveHeroes[heroAttack].currentHP} / ${aliveHeroes[heroAttack].maxHP} HP`;
+                    warriorHealthBar.style.width = `${(aliveHeroes[heroAttack].currentHP / aliveHeroes[heroAttack].maxHP) * 300}px`;
+                    if (heroesArray[2].currentHP <= 0) {
+                        heroesArray[2].currentHP = 0;
+                        heroesArray[2].alive = false;
+                        alert(`${heroesArray[2].name} døde!`);
+                        warriorHealthTxt.innerHTML = `0 / ${heroesArray[2].maxHP} HP`;
+                        warriorHealthBar.style.width = `0px`;
+                    }
+                }
+
+                
             }
-        };
+        }
+
 
         //Legger til angrep for heltene
         healer.addEventListener("click", function() {
@@ -167,6 +203,7 @@
                 // Healer angriper + alert
                 alert("healer angrep for " + heroesArray[0].damage + " skade!");
                 dragonStats.currentHP -= heroesArray[0].damage;
+                dragonHealthBar.style.width = `${(dragonStats.currentHP / dragonStats.maxHP) * 300}px`;
 
                 //Sjekker om dragen dævva
                 if (dragonStats.currentHP <= 0) {
@@ -187,6 +224,8 @@
                 // Healer angriper + alert
                 alert("Archer angrep for " + heroesArray[1].damage + " skade!");
                 dragonStats.currentHP -= heroesArray[1].damage;
+                dragonHealthBar.style.width = `${(dragonStats.currentHP / dragonStats.maxHP) * 300}px`;
+
 
                 //Sjekker om dragen dævva
                 if (dragonStats.currentHP <= 0) {
@@ -196,7 +235,7 @@
                 }
                 
                 dragonHealthTxt.innerHTML = `${dragonStats.currentHP} / ${dragonStats.maxHP} HP`;
-                
+                dragonAttack();
             };
         });
 
@@ -205,6 +244,8 @@
                 // Healer angriper + alert
                 alert("Warrior angrep for " + heroesArray[2].damage + " skade!");
                 dragonStats.currentHP -= heroesArray[2].damage;
+                dragonHealthBar.style.width = `${(dragonStats.currentHP / dragonStats.maxHP) * 300}px`;
+
 
                 //Sjekker om dragen dævva
                 if (dragonStats.currentHP <= 0) {
@@ -214,13 +255,17 @@
                 }
                 
                 dragonHealthTxt.innerHTML = `${dragonStats.currentHP} / ${dragonStats.maxHP} HP`;
-                
+                dragonAttack();
             };
         });
 
+        if (!dragonStats.alive == false ) {
+            alert("Alle heltene vant!");
+        }
         
-        
-        
+        if (heroesArray[0].alive == false && heroesArray[1].alive==false && heroesArray[2].alive==false) {
+            alert("Dragen vant!");
+        }
         
 
 
