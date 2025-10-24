@@ -165,6 +165,7 @@
                         heroesArray[0].currentHP = 0;
                         heroesArray[0].alive = false;
                         alert(`${heroesArray[0].name} døde!`);
+                        healer.remove();
                         healerHealthTxt.innerHTML = `0 / ${heroesArray[0].maxHP} HP`;
                         healerHealthBar.style.width = `0px`;
                     }
@@ -176,6 +177,7 @@
                         heroesArray[1].currentHP = 0;
                         heroesArray[1].alive = false;
                         alert(`${heroesArray[1].name} døde!`);
+                        archer.remove();
                         archerHealthTxt.innerHTML = `0 / ${heroesArray[1].maxHP} HP`;
                         archerHealthBar.style.width = `0px`;
                     }
@@ -187,6 +189,7 @@
                         heroesArray[2].currentHP = 0;
                         heroesArray[2].alive = false;
                         alert(`${heroesArray[2].name} døde!`);
+                        warrior.remove();
                         warriorHealthTxt.innerHTML = `0 / ${heroesArray[2].maxHP} HP`;
                         warriorHealthBar.style.width = `0px`;
                     }
@@ -195,6 +198,17 @@
                 
             }
         }
+
+        function checkPlayerStatus() {
+            if (dragonStats.alive == false) {
+                alert("Gratulerer du har vunnet spillet!");
+                dragon.remove(); // Fjerner graffikken på dragen
+            }
+            else if (heroesArray[0].alive == false && heroesArray[1].alive==false && heroesArray[2].alive==false) {
+                alert("Dragen vant!");
+
+            }
+        };
 
 
         //Legger til angrep for heltene
@@ -213,11 +227,12 @@
                 }
                 
                 dragonHealthTxt.innerHTML = `${dragonStats.currentHP} / ${dragonStats.maxHP} HP`;
-
+                // Dragen angriper tilbake
                 dragonAttack();
-                
-            };
-        });
+                // Sjekker status og om noen har vunent
+                checkPlayerStatus();
+                }
+            });
 
         archer.addEventListener("click", function() {
             if (heroesArray[1].alive && dragonStats.alive) {
@@ -226,8 +241,6 @@
                 dragonStats.currentHP -= heroesArray[1].damage;
                 dragonHealthBar.style.width = `${(dragonStats.currentHP / dragonStats.maxHP) * 300}px`;
 
-
-                //Sjekker om dragen dævva
                 if (dragonStats.currentHP <= 0) {
                     dragonStats.currentHP = 0;
                     dragonStats.alive = false;
@@ -236,6 +249,7 @@
                 
                 dragonHealthTxt.innerHTML = `${dragonStats.currentHP} / ${dragonStats.maxHP} HP`;
                 dragonAttack();
+                checkPlayerStatus();
             };
         });
 
@@ -247,7 +261,7 @@
                 dragonHealthBar.style.width = `${(dragonStats.currentHP / dragonStats.maxHP) * 300}px`;
 
 
-                //Sjekker om dragen dævva
+                
                 if (dragonStats.currentHP <= 0) {
                     dragonStats.currentHP = 0;
                     dragonStats.alive = false;
@@ -256,16 +270,14 @@
                 
                 dragonHealthTxt.innerHTML = `${dragonStats.currentHP} / ${dragonStats.maxHP} HP`;
                 dragonAttack();
+                checkPlayerStatus();
+
             };
         });
 
-        if (!dragonStats.alive == false ) {
-            alert("Alle heltene vant!");
-        }
         
-        if (heroesArray[0].alive == false && heroesArray[1].alive==false && heroesArray[2].alive==false) {
-            alert("Dragen vant!");
-        }
+        
+        
         
 
 
