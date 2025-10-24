@@ -108,7 +108,7 @@
             name: "Daar Dragon",
             maxHP: 2000,
             currentHP: 2000,
-            damage: 800,
+            damage: 200,
             alive: true,
         };
 
@@ -227,11 +227,14 @@
                 }
                 
                 dragonHealthTxt.innerHTML = `${dragonStats.currentHP} / ${dragonStats.maxHP} HP`;
-                // Dragen angriper tilbake
-                dragonAttack();
-                // Sjekker status og om noen har vunent
-                checkPlayerStatus();
-                }
+                //Venter i 2 sekunder før noe nytt skjer
+                setTimeout(() => {
+                    // Dragen angriper tilbake
+                    dragonAttack();
+                    // Sjekker status og om noen har vunent
+                    checkPlayerStatus();
+                }, 2500);
+                };
             });
 
         archer.addEventListener("click", function() {
@@ -248,8 +251,13 @@
                 }
                 
                 dragonHealthTxt.innerHTML = `${dragonStats.currentHP} / ${dragonStats.maxHP} HP`;
-                dragonAttack();
-                checkPlayerStatus();
+                
+                setTimeout(() => {
+                    // Dragen angriper tilbake
+                    dragonAttack();
+                    // Sjekker status og om noen har vunent
+                    checkPlayerStatus();
+                }, 2500);
             };
         });
 
@@ -269,8 +277,13 @@
                 }
                 
                 dragonHealthTxt.innerHTML = `${dragonStats.currentHP} / ${dragonStats.maxHP} HP`;
-                dragonAttack();
-                checkPlayerStatus();
+                
+                setTimeout(() => {
+                    // Dragen angriper tilbake
+                    dragonAttack();
+                    // Sjekker status og om noen har vunent
+                    checkPlayerStatus();
+                }, 2500);
 
             };
         });
